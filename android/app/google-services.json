@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "920209271983",
+    "firebase_url": "https://dsc-events-bkbiet.firebaseio.com",
+    "project_id": "dsc-events-bkbiet",
+    "storage_bucket": "dsc-events-bkbiet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920209271983:android:01cad3e08157e58157385a",
+        "android_client_info": {
+          "package_name": "com.bkbiet.dsc_event"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920209271983-ls2phdovgtgbk8883qjcdu3ihtkpph8j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bkbiet.dsc_event",
+            "certificate_hash": "2554c585a1cb3e1b3bf6982d3792118486ff0200"
+          }
+        },
+        {
+          "client_id": "920209271983-ifmtfuqjgp352gregqqkk0l9ttepla75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbYXGWt-tgdD-QtRQMYdiEqKTOdMk69zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920209271983-ifmtfuqjgp352gregqqkk0l9ttepla75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
