@@ -26,8 +26,11 @@ dependencies:
 
   #firebase lib
   firebase_core: ^1.0.1
-  #firebase_messaging: ^9.0.0
+  firebase_messaging: ^9.0.0
   cloud_firestore: ^1.0.1
+  #local notifications
+  flutter_local_notifications: ^5.0.0
+
   #loading animation
   shimmer: ^1.1.1
   #state management
