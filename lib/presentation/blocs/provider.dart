@@ -1,4 +1,4 @@
-import 'package:dsc_event/model/events.dart';
+import 'package:dsc_event/data/models/events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

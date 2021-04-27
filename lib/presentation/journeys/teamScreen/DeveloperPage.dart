@@ -1,4 +1,5 @@
-import 'package:dsc_event/consts/Strings.dart';
+import 'package:dsc_event/common/constants/Images.dart';
+import 'package:dsc_event/common/constants/Strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,7 +12,7 @@ class DeveloperPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          Strings.logo,
+          Images.logo,
           height: 45,
         ),
         backgroundColor: Colors.grey.shade900,
@@ -79,7 +80,7 @@ class DeveloperPage extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.network(
-                        Strings.discord,
+                        Images.discord,
                         height: 30,
                       ),
                       Padding(
@@ -99,7 +100,7 @@ class DeveloperPage extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.network(
-                        Strings.instagram,
+                        Images.instagram,
                         height: 30,
                       ),
                       Padding(
@@ -120,7 +121,7 @@ class DeveloperPage extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.network(
-                        Strings.linkedin,
+                        Images.linkedin,
                         height: 30,
                       ),
                       Padding(
@@ -140,7 +141,7 @@ class DeveloperPage extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.network(
-                        Strings.twitter,
+                        Images.twitter,
                         height: 30,
                       ),
                       Padding(
@@ -160,7 +161,7 @@ class DeveloperPage extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.network(
-                        Strings.github,
+                        Images.github,
                         height: 30,
                       ),
                       Padding(
@@ -180,7 +181,7 @@ class DeveloperPage extends StatelessWidget {
                   child: Row(
                     children: [
                       SvgPicture.network(
-                        Strings.github,
+                        Images.github,
                         height: 30,
                       ),
                       Padding(

@@ -1,11 +1,13 @@
-class Events {
-  String id;
-  String image;
-  String name;
-  String date;
-  String details;
-  String type;
-  String eventUrl;
+import 'package:dsc_event/domain/entities/events_entity.dart';
+
+class Events extends EventsEntity {
+  final String id;
+  final String image;
+  final String name;
+  final String date;
+  final String details;
+  final String type;
+  final String eventUrl;
 
   Events(
       {this.id,
@@ -14,7 +16,15 @@ class Events {
       this.date,
       this.details,
       this.type,
-      this.eventUrl});
+      this.eventUrl})
+      : super(
+            id: id,
+            image: image,
+            name: name,
+            date: date,
+            details: details,
+            type: type,
+            eventUrl: eventUrl);
 
   factory Events.fromJson(Map<String, dynamic> value) {
     return Events(

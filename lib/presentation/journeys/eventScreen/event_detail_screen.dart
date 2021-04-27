@@ -1,20 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dsc_event/consts/Strings.dart';
-import 'package:dsc_event/model/events.dart';
-import 'package:dsc_event/shimmer/loadingImage.dart';
+import 'package:dsc_event/common/constants/Images.dart';
+import 'package:dsc_event/data/models/events.dart';
+import 'package:dsc_event/presentation/widgets/loadingImage.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Second extends StatefulWidget {
+class EventDetailScreen extends StatefulWidget {
+  const EventDetailScreen({Key key, this.events}) : super(key: key);
   final Events events;
 
-  const Second({Key key, this.events}) : super(key: key);
-
   @override
-  _SecondState createState() => _SecondState();
+  _EventDetailScreenState createState() => _EventDetailScreenState();
 }
 
-class _SecondState extends State<Second> {
+class _EventDetailScreenState extends State<EventDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -22,7 +21,7 @@ class _SecondState extends State<Second> {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          Strings.logo,
+          Images.logo,
           height: 45,
         ),
         backgroundColor: Colors.grey.shade900,
@@ -37,12 +36,12 @@ class _SecondState extends State<Second> {
             child: Hero(
               tag: widget.events.id,
               child: Container(
-                child:CachedNetworkImage(
-                        imageUrl: widget.events.image,
-                        fit: BoxFit.fill,
-                        placeholder: (context, url) => CarouselImageLoading(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
+                child: CachedNetworkImage(
+                  imageUrl: widget.events.image,
+                  fit: BoxFit.fill,
+                  placeholder: (context, url) => CarouselImageLoading(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               ),
             ),
           ),
@@ -96,8 +95,9 @@ class _SecondState extends State<Second> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10,),
-
+                            SizedBox(
+                              height: 10,
+                            ),
                             FittedBox(
                               child: Text(
                                 widget.events.date,
@@ -158,7 +158,8 @@ class _SecondState extends State<Second> {
                                       await launch(url);
                                     else
                                       // can't launch url, there is some error
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
                                         content: Text(
                                           "Error while opening url try again!",
                                           style: TextStyle(color: Colors.white),
