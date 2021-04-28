@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Logo(
-          height: 45,
+          height: 40,
         ),
         backgroundColor: Colors.grey.shade900,
         elevation: 0.0,

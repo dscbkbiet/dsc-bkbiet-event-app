@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dsc_event/data/data_sources/remote_data_source.dart';
 import 'package:dsc_event/domain/entities/app_error.dart';
+import 'package:dsc_event/domain/entities/blog_entity.dart';
 import 'package:dsc_event/domain/entities/events_entity.dart';
 import 'package:dsc_event/domain/repositories/app_repositories.dart';
 
@@ -14,8 +15,8 @@ class AppRepositoryImpl extends AppRepository {
   @override
   Future<Either<AppError, List<EventsEntity>>> getEvents() async {
     try {
-      final movies = await remoteDataSource.getEvents();
-      return Right(movies);
+      final events = await remoteDataSource.getEvents();
+      return Right(events);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on Exception {
@@ -24,11 +25,34 @@ class AppRepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<Either<AppError, List<EventsEntity>>> getMoreEvents(
-      List<dynamic> list) async {
+  Future<Either<AppError, List<EventsEntity>>> getMoreEvents() async {
     try {
-      final movies = await remoteDataSource.getMoreEvents(list);
-      return Right(movies);
+      final events = await remoteDataSource.getMoreEvents();
+      return Right(events);
+    } on SocketException {
+      return Left(AppError(AppErrorType.network));
+    } on Exception {
+      return Left(AppError(AppErrorType.api));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<BlogEntity>>> getBlog() async {
+    try {
+      final blog = await remoteDataSource.getBlog();
+      return Right(blog);
+    } on SocketException {
+      return Left(AppError(AppErrorType.network));
+    } on Exception {
+      return Left(AppError(AppErrorType.api));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<BlogEntity>>> getMoreBlog() async {
+    try {
+      final blog = await remoteDataSource.getMoreBlog();
+      return Right(blog);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on Exception {

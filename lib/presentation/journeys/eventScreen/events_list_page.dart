@@ -2,7 +2,6 @@ import 'package:dsc_event/di/get_it.dart';
 import 'package:dsc_event/domain/entities/events_entity.dart';
 import 'package:dsc_event/presentation/blocs/eventsList/events_list_cubit.dart';
 import 'package:dsc_event/presentation/journeys/eventScreen/event_list.dart';
-import 'package:dsc_event/presentation/widgets/loading_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +12,8 @@ class EventsListPage extends StatefulWidget {
 
 class _EventsListPageState extends State<EventsListPage> {
   EventsListCubit _eventsListCubit;
-  List<EventsEntity> _eventsList = [];
+  List<EventsEntity> _eventsList = List.empty(growable: true);
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -22,7 +22,6 @@ class _EventsListPageState extends State<EventsListPage> {
     _eventsListCubit.loadEvents();
   }
 
-  //;
   @override
   void dispose() {
     _eventsListCubit?.close();
@@ -35,43 +34,30 @@ class _EventsListPageState extends State<EventsListPage> {
       body: BlocBuilder(
         cubit: _eventsListCubit,
         builder: (context, state) {
-          if (state is EventsListLoading) {
-            return Container();
+          if (state is EventsListInitial ||
+              state is EventsListLoading && _eventsList.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (state is EventsListLoaded) {
-            _eventsList = state.eventsEntity;
-            return EventList(
-              onComplete: () {
-                _eventsListCubit.loadMoreEvents(_eventsList);
-              },
-              list: _eventsList,
-            );
+            _eventsList.addAll(state.eventsEntity);
           } else if (state is EventsListLoadingMore) {
-            return Column(
-              children: [
-                Expanded(
-                  flex: 9,
-                  child: EventList(
-                    onComplete: () {
-                      _eventsListCubit.loadMoreEvents(_eventsList);
-                    },
-                    list: _eventsList,
-                  ),
-                ),
-                Expanded(flex: 1, child: LoadingBar())
-              ],
-            );
+            isLoading = true;
           } else if (state is EventsListLoadMore) {
-            _eventsList += state.eventsEntity;
-            return EventList(
-              onComplete: () {
-                _eventsListCubit.loadMoreEvents(_eventsList);
-              },
-              list: _eventsList,
-            );
+            isLoading = false;
+            if (state.eventsEntity.isNotEmpty) {
+              _eventsList.addAll(state.eventsEntity);
+            }
           } else if (state is EventsListError) {
             return Container();
           }
-          return SizedBox.shrink();
+          return EventList(
+            onComplete: () {
+              _eventsListCubit.loadMoreEvents(_eventsList);
+            },
+            isLoading: isLoading,
+            list: _eventsList,
+          );
         },
       ),
     );

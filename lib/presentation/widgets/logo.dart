@@ -13,10 +13,13 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      Images.logo,
-      key: const ValueKey('logo_image_key'),
-      color: Colors.white,
+    return SizedBox(
+      height: height,
+      child: Image.asset(
+        Images.logo,
+        key: const ValueKey('logo_image_key'),
+        color: Colors.white,
+      ),
     );
   }
 }
