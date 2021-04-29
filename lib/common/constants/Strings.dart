@@ -5,14 +5,15 @@ class Strings {
 
   static const String keyEvents = "events";
 
-  static const String developerName = "Shekhar Aggarwal\n(BKBIET)";
+  static const String keyBlog = "blog";
 
-  static const String developerType = "From the developer desk";
+  static const String linkedIn = "https://www.linkedin.com/in/";
 
-  static const String developerImage = "asset/dev.jpg";
+  static const String gitHub = "https://github.com/";
+
+  static const String instagram = "https://www.instagram.com/";
+
+  static const String twitter = "https://twitter.com/";
 
   static const String font = "Dancing";
-
-  static const String aboutDeveloper =
-      "It is always a matter of pride to work for the Developer Student Clubs. While working on the application i learnt to pick up the ropes and have tried to blend the individuality and creativity with the rich legacy of the Developer Student Clubs.";
 }

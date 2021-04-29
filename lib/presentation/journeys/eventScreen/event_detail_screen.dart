@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dsc_event/common/constants/Images.dart';
-import 'package:dsc_event/data/models/events.dart';
+import 'package:dsc_event/domain/entities/events_entity.dart';
 import 'package:dsc_event/presentation/widgets/loadingImage.dart';
+import 'package:dsc_event/presentation/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EventDetailScreen extends StatefulWidget {
   const EventDetailScreen({Key key, this.events}) : super(key: key);
-  final Events events;
+  final EventsEntity events;
 
   @override
   _EventDetailScreenState createState() => _EventDetailScreenState();
@@ -20,10 +21,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset(
-          Images.logo,
-          height: 45,
-        ),
+        title: Logo(height: 45,),
         backgroundColor: Colors.grey.shade900,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.white),
@@ -114,23 +112,14 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             horizontal: 25.0, vertical: 0.0),
                         child: Row(
                           children: <Widget>[
-                            Text(
-                              widget.events.name,
-                              style: TextStyle(
-                                  fontSize: 18.0, fontWeight: FontWeight.bold),
-                            ),
-                            Spacer(),
-                            Material(
-                              shadowColor: Color(0xffFD7932),
-                              borderRadius: BorderRadius.circular(50.0),
-                              color: Color(0xffFD7932),
-                              child: Container(
-                                padding: EdgeInsets.all(10.0),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.white,
-                                  size: 18.0,
-                                ),
+                            Flexible(
+                              child: Text(
+                                widget.events.name,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 18.0, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],

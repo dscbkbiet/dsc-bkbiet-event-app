@@ -1,7 +1,7 @@
-import 'package:dsc_event/presentation/journeys/teamScreen/DeveloperPage.dart';
-import 'package:dsc_event/presentation/journeys/homeScreen/Pages/blogs_list_page.dart';
 import 'package:dsc_event/presentation/journeys/eventScreen/events_list_page.dart';
-import 'package:dsc_event/presentation/journeys/homeScreen/Pages/podcast_list_page.dart';
+import 'package:dsc_event/presentation/journeys/homeScreen/Pages/blogPage/blogs_page.dart';
+import 'package:dsc_event/presentation/journeys/homeScreen/Pages/podcastPage/podcast_list_page.dart';
+import 'package:dsc_event/presentation/journeys/teamScreen/DeveloperScreen.dart';
 import 'package:dsc_event/presentation/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +11,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController _pageController = PageController();
+  int selectedIndex = 0;
+
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => DeveloperPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => DeveloperScreen()));
             },
             color: Colors.white,
           ),
@@ -42,19 +47,47 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.grey.shade900,
         selectedItemColor: Colors.white.withOpacity(0.9),
         unselectedItemColor: Colors.white.withOpacity(0.5),
-        currentIndex: 0,
-        onTap: (int index) {},
+        currentIndex: selectedIndex,
+        onTap: (int index) {
+          if (index != selectedIndex && index == 0) {
+            _pageController.animateToPage(
+              0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          } else if (index != selectedIndex && index == 1) {
+            _pageController.animateToPage(
+              1,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          } else if (index != selectedIndex && index == 2) {
+            _pageController.animateToPage(
+              2,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          }
+        },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.event), label: "Events"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.edit_outlined), label: "Blog"),
           BottomNavigationBarItem(
               icon: Icon(Icons.speaker_phone), label: "Pod Cast")
         ],
       ),
       body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
         children: [
           EventsListPage(),
-          PodCastPage(),
           BlogPage(),
+          PodCastPage(),
         ],
       ),
     );

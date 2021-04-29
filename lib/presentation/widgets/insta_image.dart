@@ -23,7 +23,7 @@ class InstaImage extends StatelessWidget {
       height: height,
       width: width,
       key: const ValueKey('insta_image'),
-      color: Colors.black,
+      color: Colors.pinkAccent,
     );
   }
 }

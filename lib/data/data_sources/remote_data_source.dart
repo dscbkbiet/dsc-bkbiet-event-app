@@ -20,39 +20,42 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   @override
   Future<List<Events>> getEvents() async {
-    final List<Events> eType = [];
+    final List<Events> eList = [];
     QuerySnapshot _querySnapshot = await ApiConstants.fireStore
         .collection(Strings.keyEvents)
+        .orderBy("id", descending: true)
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      eType.add(Events.fromJson(item.data()));
+      eList.add(Events.fromJson(item.data()));
     }
     lastEventDocs = _querySnapshot.docs.last;
-    return eType;
+    return eList;
   }
 
   @override
   Future<List<Events>> getMoreEvents() async {
-    final List<Events> eType = [];
+    final List<Events> eList = [];
     QuerySnapshot _querySnapshot = await ApiConstants.fireStore
         .collection(Strings.keyEvents)
+        .orderBy("id", descending: true)
         .startAfterDocument(lastEventDocs)
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      eType.add(Events.fromJson(item.data()));
+      eList.add(Events.fromJson(item.data()));
     }
     if (_querySnapshot.docs.isNotEmpty)
       lastEventDocs = _querySnapshot.docs.last;
-    return eType;
+    return eList;
   }
 
   @override
   Future<List<Blog>> getBlog() async {
     final List<Blog> bList = [];
     QuerySnapshot _querySnapshot = await ApiConstants.fireStore
-        .collection(Strings.keyEvents)
+        .collection(Strings.keyBlog)
+        .orderBy("blogId", descending: true)
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
@@ -66,8 +69,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<Blog>> getMoreBlog() async {
     final List<Blog> bList = [];
     QuerySnapshot _querySnapshot = await ApiConstants.fireStore
-        .collection(Strings.keyEvents)
-        .startAfterDocument(lastEventDocs)
+        .collection(Strings.keyBlog)
+        .orderBy("blogId", descending: true)
+        .startAfterDocument(lastBlogDocs)
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {

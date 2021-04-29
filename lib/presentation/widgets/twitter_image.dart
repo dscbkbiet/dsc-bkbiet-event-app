@@ -23,7 +23,7 @@ class TwitterImage extends StatelessWidget {
       height: height,
       width: width,
       key: const ValueKey('twitter_image'),
-      color: Colors.black,
+      color: Colors.lightBlue,
     );
   }
 }

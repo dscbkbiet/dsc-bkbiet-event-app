@@ -1,18 +1,41 @@
-import 'package:dsc_event/common/constants/Images.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dsc_event/common/constants/Strings.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dsc_event/presentation/widgets/git_image.dart';
+import 'package:dsc_event/presentation/widgets/insta_image.dart';
+import 'package:dsc_event/presentation/widgets/linkedin_image.dart';
+import 'package:dsc_event/presentation/widgets/loadingImage.dart';
+import 'package:dsc_event/presentation/widgets/logo.dart';
+import 'package:dsc_event/presentation/widgets/twitter_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperPage extends StatelessWidget {
+  const DeveloperPage(
+      {Key key,
+      @required this.memberImage,
+      @required this.memberName,
+      @required this.memberPost,
+      @required this.aboutMember,
+      @required this.memberLinkedIn,
+      @required this.memberInsta,
+      @required this.memberTwitter,
+      @required this.memberGitHub})
+      : super(key: key);
+  final String memberImage;
+  final String memberName;
+  final String memberPost;
+  final String memberLinkedIn;
+  final String memberInsta;
+  final String memberTwitter;
+  final String memberGitHub;
+  final String aboutMember;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset(
-          Images.logo,
+        title: Logo(
           height: 45,
         ),
         backgroundColor: Colors.grey.shade900,
@@ -29,20 +52,26 @@ class DeveloperPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage(
-                    Strings.developerImage,
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: CachedNetworkImage(
+                      imageUrl: memberImage,
+                      height: 80,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) => CarouselImageLoading(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
-                  radius: 50,
-                  // minRadius: 40,
-                  // maxRadius: 70,
                 ),
                 Expanded(
                   child: Text(
-                    Strings.developerType,
+                    "From the $memberPost desk",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontFamily: "Dancing",
                         color: Colors.red,
                         fontWeight: FontWeight.bold),
@@ -54,7 +83,7 @@ class DeveloperPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
             child: Text(
-              Strings.aboutDeveloper,
+              aboutMember,
               style: TextStyle(fontSize: 15, height: 1.5),
             ),
           ),
@@ -64,7 +93,7 @@ class DeveloperPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              Strings.developerName,
+              memberName,
               textAlign: TextAlign.right,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
@@ -75,17 +104,14 @@ class DeveloperPage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    openWeb("https://discord.gg/7jpqTBt", context);
+                    openWeb("${Strings.instagram}$memberInsta", context);
                   },
                   child: Row(
                     children: [
-                      SvgPicture.network(
-                        Images.discord,
-                        height: 30,
-                      ),
+                      InstaImage(height: 30, width: 30),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/dscbkbiet"),
+                        child: Text("/$memberInsta"),
                       )
                     ],
                   ),
@@ -95,17 +121,14 @@ class DeveloperPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    openWeb("https://www.instagram.com/dscbkbiet/", context);
+                    openWeb("${Strings.linkedIn}$memberLinkedIn", context);
                   },
                   child: Row(
                     children: [
-                      SvgPicture.network(
-                        Images.instagram,
-                        height: 30,
-                      ),
+                      LinkedInImage(height: 30, width: 30),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/dscbkbiet/"),
+                        child: Text("/$memberLinkedIn"),
                       )
                     ],
                   ),
@@ -115,18 +138,14 @@ class DeveloperPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    openWeb(
-                        "https://www.linkedin.com/company/dsc-bkbiet", context);
+                    openWeb("${Strings.twitter}$memberTwitter", context);
                   },
                   child: Row(
                     children: [
-                      SvgPicture.network(
-                        Images.linkedin,
-                        height: 30,
-                      ),
+                      TwitterImage(height: 30, width: 30),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/company/dsc-bkbiet"),
+                        child: Text("/$memberTwitter"),
                       )
                     ],
                   ),
@@ -136,57 +155,14 @@ class DeveloperPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    openWeb(" https://twitter.com/dscbkbiet", context);
+                    openWeb("${Strings.gitHub}$memberGitHub", context);
                   },
                   child: Row(
                     children: [
-                      SvgPicture.network(
-                        Images.twitter,
-                        height: 30,
-                      ),
+                      GitHubImage(height: 30, width: 30),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/dscbkbiet"),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                InkWell(
-                  onTap: () {
-                    openWeb("https://github.com/dscbkbiet", context);
-                  },
-                  child: Row(
-                    children: [
-                      SvgPicture.network(
-                        Images.github,
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/dscbkbiet"),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                InkWell(
-                  onTap: () {
-                    openWeb("https://github.com/shekharAggarwal", context);
-                  },
-                  child: Row(
-                    children: [
-                      SvgPicture.network(
-                        Images.github,
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/shekharAggarwal"),
+                        child: Text("/$memberGitHub"),
                       )
                     ],
                   ),
