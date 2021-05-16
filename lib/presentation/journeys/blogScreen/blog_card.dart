@@ -19,14 +19,14 @@ class BlogCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              openLink(context, blogLink);
-            },
-            child: Container(
+    return InkWell(
+      onTap: () {
+        openLink(context, blogLink);
+      },
+      child: Card(
+        child: Column(
+          children: [
+            Container(
               margin: EdgeInsets.only(top: 20.0, left: 25.0, right: 25.0),
               child: Column(
                 children: <Widget>[
@@ -37,7 +37,7 @@ class BlogCard extends StatelessWidget {
                       borderRadius: new BorderRadius.circular(20.0),
                       child: CachedNetworkImage(
                         imageUrl: blogImageLink,
-                        height: 350.0,
+                        height: 300.0,
                         fit: BoxFit.contain,
                         placeholder: (context, url) => CarouselImageLoading(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
@@ -47,39 +47,39 @@ class BlogCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                FittedBox(
-                  child: Text(
-                    blogTitle,
-                    maxLines: 1,
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+            Container(
+              padding: EdgeInsets.only(top: 15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  FittedBox(
+                    child: Text(
+                      blogTitle,
+                      maxLines: 1,
+                      style:
+                          TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                FittedBox(
-                  child: Text(
-                    blogSubTitle.intelliTrim(size: 40),
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600),
+                  SizedBox(
+                    height: 10,
                   ),
-                )
-              ],
+                  FittedBox(
+                    child: Text(
+                      blogSubTitle.intelliTrim(size: 40),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 25.0,
-          ),
-        ],
+            SizedBox(
+              height: 25.0,
+            ),
+          ],
+        ),
       ),
     );
   }

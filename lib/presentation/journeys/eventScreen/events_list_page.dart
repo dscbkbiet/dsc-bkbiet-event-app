@@ -40,6 +40,7 @@ class _EventsListPageState extends State<EventsListPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is EventsListLoaded) {
+            if(_eventsList.isEmpty)
             _eventsList.addAll(state.eventsEntity);
           } else if (state is EventsListLoadingMore) {
             isLoading = true;
@@ -53,7 +54,7 @@ class _EventsListPageState extends State<EventsListPage> {
           }
           return EventList(
             onComplete: () {
-              _eventsListCubit.loadMoreEvents(_eventsList);
+              _eventsListCubit.loadMoreEvents();
             },
             isLoading: isLoading,
             list: _eventsList,

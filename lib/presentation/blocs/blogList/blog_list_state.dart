@@ -1,7 +1,7 @@
 part of 'blog_list_cubit.dart';
 
 @immutable
-abstract class BlogListState {
+abstract class BlogListState extends Equatable{
   const BlogListState();
 
   @override

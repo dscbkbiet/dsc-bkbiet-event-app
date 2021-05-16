@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dsc_event/domain/entities/blog_entity.dart';
-import 'package:dsc_event/presentation/journeys/homeScreen/Pages/blogPage/blog_card.dart';
+import 'package:dsc_event/presentation/journeys/blogScreen/blog_card.dart';
 import 'package:flutter/material.dart';
 
 class BlogList extends StatefulWidget {

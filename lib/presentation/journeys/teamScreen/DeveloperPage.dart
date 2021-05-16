@@ -36,9 +36,10 @@ class DeveloperPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Logo(
-          height: 45,
+          height: 40,
         ),
         backgroundColor: Colors.grey.shade900,
+        brightness: Brightness.dark,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.white),
       ),

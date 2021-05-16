@@ -1,7 +1,7 @@
 part of 'events_list_cubit.dart';
 
 @immutable
-abstract class EventsListState {
+abstract class EventsListState extends Equatable {
   const EventsListState();
 
   @override

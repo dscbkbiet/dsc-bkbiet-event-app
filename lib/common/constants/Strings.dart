@@ -7,6 +7,8 @@ class Strings {
 
   static const String keyBlog = "blog";
 
+  static const String keyAudio = "Audio";
+
   static const String linkedIn = "https://www.linkedin.com/in/";
 
   static const String gitHub = "https://github.com/";

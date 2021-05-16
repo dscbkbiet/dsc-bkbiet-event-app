@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dsc_event/common/constants/Images.dart';
 import 'package:dsc_event/domain/entities/events_entity.dart';
 import 'package:dsc_event/presentation/widgets/loadingImage.dart';
 import 'package:dsc_event/presentation/widgets/logo.dart';
@@ -21,7 +20,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Logo(height: 45,),
+        title: Logo(height: 40,),
+        brightness: Brightness.dark,
         backgroundColor: Colors.grey.shade900,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.white),

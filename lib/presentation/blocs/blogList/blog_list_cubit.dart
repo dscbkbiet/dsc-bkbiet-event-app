@@ -5,6 +5,7 @@ import 'package:dsc_event/domain/entities/blog_entity.dart';
 import 'package:dsc_event/domain/entities/no_params.dart';
 import 'package:dsc_event/domain/usecases/get_blog.dart';
 import 'package:dsc_event/domain/usecases/get_blog_more.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'blog_list_state.dart';

@@ -1,7 +1,7 @@
 import 'package:dsc_event/di/get_it.dart';
 import 'package:dsc_event/domain/entities/blog_entity.dart';
 import 'package:dsc_event/presentation/blocs/blogList/blog_list_cubit.dart';
-import 'package:dsc_event/presentation/journeys/homeScreen/Pages/blogPage/plog_list_view.dart';
+import 'package:dsc_event/presentation/journeys/blogScreen/plog_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +40,7 @@ class _BlogPageState extends State<BlogPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is BlogListLoaded) {
-            _blogList.addAll(state.blogList);
+            if (_blogList.isEmpty) _blogList.addAll(state.blogList);
           } else if (state is BlogListLoadingMore) {
             isLoading = true;
           } else if (state is BlogListLoadMore) {

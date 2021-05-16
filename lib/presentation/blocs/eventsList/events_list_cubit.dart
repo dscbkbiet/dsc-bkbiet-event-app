@@ -6,6 +6,7 @@ import 'package:dsc_event/domain/entities/no_params.dart';
 import 'package:dsc_event/domain/usecases/get_events.dart';
 import 'package:dsc_event/domain/usecases/get_events_more.dart';
 import 'package:dsc_event/presentation/blocs/loading/loading_cubit.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'events_list_state.dart';
@@ -33,7 +34,7 @@ class EventsListCubit extends Cubit<EventsListState> {
     loadingCubit.hide();
   }
 
-  void loadMoreEvents(List<dynamic> list) async {
+  void loadMoreEvents() async {
     emit(EventsListLoadingMore());
     final Either<AppError, List<EventsEntity>> eitherResponse =
         await getMoreEvents(NoParams());
