@@ -2,11 +2,11 @@ import 'package:dsc_event/common/constants/Images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class GitHubImage extends StatelessWidget {
+class SpotifyImage extends StatelessWidget {
   final double height;
   final double width;
 
-  const GitHubImage({
+  const SpotifyImage({
     Key key,
     @required this.height,
     @required this.width,
@@ -19,10 +19,10 @@ class GitHubImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SvgPicture.network(
-      Images.github,
+      Images.spotify,
       height: height,
       width: width,
-      key: const ValueKey('git_image'),
+      key: const ValueKey('spotify_image'),
       color: Colors.black,
     );
   }

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dsc_event/common/extensions/ext.dart';
 import 'package:dsc_event/data/models/podcast.dart';
-import 'package:dsc_event/presentation/journeys/homeScreen/music_controller.dart';
 import 'package:dsc_event/presentation/widgets/loadingImage.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +11,19 @@ const _maxHeight = 300.0;
 const _minHeight = 70.0;
 
 class MusicPlayer extends StatefulWidget {
-  const MusicPlayer({Key key, this.currentPodCast}) : super(key: key);
+  const MusicPlayer(
+      {Key key,
+      this.currentPodCast,
+      this.onPause,
+      this.onResume,
+      this.onStop,
+      this.isPlay})
+      : super(key: key);
   final PodCast currentPodCast;
+  final VoidCallback onPause;
+  final VoidCallback onResume;
+  final VoidCallback onStop;
+  final bool isPlay;
 
   @override
   _MusicPlayerState createState() => _MusicPlayerState();
@@ -147,20 +157,23 @@ class _MusicPlayerState extends State<MusicPlayer>
                                 children: [
                                   GestureDetector(
                                       onTap: () {
-                                        print(MyAudio.audioState);
-                                        if (MyAudio.audioState !=
-                                            "Stopped") if (MyAudio
-                                                .audioState ==
-                                            "Paused")
-                                          MyAudio.resumeAudio();
+                                        if (widget.isPlay)
+                                          widget.onPause();
                                         else
-                                          MyAudio.pauseAudio();
+                                          widget.onResume();
                                       },
-                                      child: Icon(Icons.pause,
-                                          color: Colors.white)),
+                                      child: widget.isPlay
+                                          ? Icon(Icons.pause,
+                                              color: Colors.white)
+                                          : Icon(Icons.play_arrow_outlined,
+                                              color: Colors.white)),
                                   GestureDetector(
-                                      onTap: () {
-                                        MyAudio.stopAudio();
+                                      onTap: () async {
+                                        _controller.reverse();
+                                        _expanded = false;
+                                        await Future.delayed(
+                                            Duration(milliseconds: 600));
+                                        widget.onStop();
                                       },
                                       child: Icon(Icons.stop,
                                           color: Colors.white)),
@@ -173,6 +186,19 @@ class _MusicPlayerState extends State<MusicPlayer>
                     ),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      onTap: () {
+                        _controller.reverse();
+                        _expanded = false;
+                      },
+                      child: Icon(Icons.close, color: Colors.white),
+                    ),
+                  ),
+                )
               ],
             ),
           );

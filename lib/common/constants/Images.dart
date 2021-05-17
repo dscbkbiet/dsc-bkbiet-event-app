@@ -16,4 +16,7 @@ class Images {
 
   static const String twitter =
       "https://cdn.jsdelivr.net/npm/simple-icons@3.12.2/icons/twitter.svg";
+
+  static const String spotify =
+      "https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/spotify.svg";
 }

@@ -18,3 +18,9 @@ class PlayMusic extends MusicPlayerAnimationState {
   @override
   List<Object> get props => [podCast];
 }
+
+class StopMusic extends MusicPlayerAnimationState {}
+
+class ResumeMusic extends MusicPlayerAnimationState {}
+
+class PauseMusic extends MusicPlayerAnimationState {}

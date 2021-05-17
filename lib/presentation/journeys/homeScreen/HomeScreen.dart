@@ -6,7 +6,6 @@ import 'package:dsc_event/presentation/blocs/musicPlayerAnimation/music_player_a
 import 'package:dsc_event/presentation/journeys/blogScreen/blogs_page.dart';
 import 'package:dsc_event/presentation/journeys/eventScreen/events_list_page.dart';
 import 'package:dsc_event/presentation/journeys/homeScreen/home_drawer.dart';
-import 'package:dsc_event/presentation/journeys/homeScreen/music_controller.dart';
 import 'package:dsc_event/presentation/journeys/homeScreen/music_player.dart';
 import 'package:dsc_event/presentation/journeys/podcastScreen/podcast_list_page.dart';
 import 'package:dsc_event/presentation/widgets/logo.dart';
@@ -22,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   PodCast _currentPodCast;
   PageController _pageController = PageController();
   int selectedIndex = 0;
-
+  bool isPlay = false;
   MusicPlayerAnimationCubit _musicPlayerAnimationCubit;
 
   @override
@@ -94,6 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           if (state is PlayMusic) {
             _currentPodCast = state.podCast;
+            isPlay = true;
+          } else if (state is PauseMusic) {
+            isPlay = false;
+          } else if (state is ResumeMusic) {
+            isPlay = true;
+          } else if (state is StopMusic) {
+            _currentPodCast = null;
           }
           return Stack(
             children: [
@@ -114,7 +120,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               if (_currentPodCast != null)
                 MusicPlayer(
+                  isPlay: isPlay,
                   currentPodCast: _currentPodCast,
+                  onPause: () {
+                    _musicPlayerAnimationCubit.pausePodCast();
+                  },
+                  onResume: () {
+                    _musicPlayerAnimationCubit.resumePodCast();
+                  },
+                  onStop: () {
+                    _musicPlayerAnimationCubit.stopPodCast();
+                  },
                 )
             ],
           );

@@ -14,4 +14,19 @@ class MusicPlayerAnimationCubit extends Cubit<MusicPlayerAnimationState> {
     MyAudio.playAudio(podCast.audioUrl);
     emit(PlayMusic(podCast));
   }
+
+  void pausePodCast() {
+    MyAudio.pauseAudio();
+    emit(PauseMusic());
+  }
+
+  void resumePodCast() {
+    MyAudio.resumeAudio();
+    emit(ResumeMusic());
+  }
+
+  void stopPodCast() {
+    MyAudio.stopAudio();
+    emit(StopMusic());
+  }
 }
