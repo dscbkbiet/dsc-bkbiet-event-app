@@ -3,7 +3,7 @@ name: Analyze, Test and Build
 on:
   push:
     branches:
-      - stable
+      - main
 
 jobs:
 
