@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 
 class PodCastList extends StatefulWidget {
   const PodCastList(
-      {Key key, this.onComplete, this.list, this.isLoading, this.onTap})
+      {Key? key,
+      required this.onComplete,
+      required this.list,
+      required this.isLoading,
+      required this.onTap})
       : super(key: key);
   final VoidCallback onComplete;
   final List<PodCastEntity> list;
@@ -29,12 +33,12 @@ class _PodCastListState extends State<PodCastList> {
   @override
   void dispose() {
     super.dispose();
-    _controllerPodCastList?.dispose();
+    _controllerPodCastList.dispose();
   }
 
   void _scrollListenerEvents() async {
     if (_controllerPodCastList.offset >=
-        _controllerPodCastList.position.maxScrollExtent &&
+            _controllerPodCastList.position.maxScrollExtent &&
         !_controllerPodCastList.position.outOfRange) {
       widget.onComplete();
     }

@@ -8,11 +8,11 @@ class Blog extends BlogEntity {
   final String blogLink;
 
   Blog(
-      {this.blogId,
-      this.blogTitle,
-      this.blogSubTitle,
-      this.blogImage,
-      this.blogLink})
+      {required this.blogId,
+      required this.blogTitle,
+      required this.blogSubTitle,
+      required this.blogImage,
+      required this.blogLink})
       : super(
           blogId: blogId,
           blogTitle: blogTitle,
@@ -21,7 +21,7 @@ class Blog extends BlogEntity {
           blogLink: blogLink,
         );
 
-  factory Blog.fromJson(Map<String, dynamic> value) {
+  factory Blog.fromJson(Map<dynamic, dynamic> value) {
     return Blog(
         blogId: value["blogId"],
         blogTitle: value["blogTitle"],

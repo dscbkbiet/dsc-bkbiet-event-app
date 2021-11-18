@@ -11,7 +11,7 @@ class BlogPage extends StatefulWidget {
 }
 
 class _BlogPageState extends State<BlogPage> {
-  BlogListCubit _blogListCubit;
+  late BlogListCubit _blogListCubit;
   List<BlogEntity> _blogList = List.empty(growable: true);
   bool isLoading = false;
 
@@ -24,7 +24,7 @@ class _BlogPageState extends State<BlogPage> {
 
   @override
   void dispose() {
-    _blogListCubit?.close();
+    _blogListCubit.close();
     super.dispose();
   }
 
@@ -32,7 +32,7 @@ class _BlogPageState extends State<BlogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder(
-        cubit: _blogListCubit,
+        bloc: _blogListCubit,
         builder: (context, state) {
           if (state is BlogListInitial ||
               state is BlogListLoading && _blogList.isEmpty) {

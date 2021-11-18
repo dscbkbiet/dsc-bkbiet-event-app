@@ -10,13 +10,13 @@ class Events extends EventsEntity {
   final String eventUrl;
 
   Events(
-      {this.id,
-      this.image,
-      this.name,
-      this.date,
-      this.details,
-      this.type,
-      this.eventUrl})
+      {required this.id,
+      required this.image,
+      required this.name,
+      required this.date,
+      required this.details,
+      required this.type,
+      required this.eventUrl})
       : super(
             id: id,
             image: image,
@@ -26,7 +26,7 @@ class Events extends EventsEntity {
             type: type,
             eventUrl: eventUrl);
 
-  factory Events.fromJson(Map<String, dynamic> value) {
+  factory Events.fromJson(Map<dynamic, dynamic> value) {
     return Events(
       id: value["id"],
       image: value["image"],

@@ -21,9 +21,9 @@ void main() async {
       title: Strings.app_name,
       home: SplashScreen(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        appBarTheme: const AppBarTheme(elevation: 0),
+        appBarTheme:
+            const AppBarTheme(elevation: 0, backgroundColor: Color(0xFF212121)),
       ),
     ),
   );

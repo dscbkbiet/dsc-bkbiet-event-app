@@ -9,6 +9,10 @@ class Strings {
 
   static const String keyAudio = "Audio";
 
+  static const String keyTeam = "team";
+
+  static const String keyTeamYear = "team-year";
+
   static const String linkedIn = "https://www.linkedin.com/in/";
 
   static const String gitHub = "https://github.com/";

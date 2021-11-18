@@ -6,6 +6,7 @@ import 'package:dsc_event/domain/entities/app_error.dart';
 import 'package:dsc_event/domain/entities/blog_entity.dart';
 import 'package:dsc_event/domain/entities/events_entity.dart';
 import 'package:dsc_event/domain/entities/podcast_entity.dart';
+import 'package:dsc_event/domain/entities/teamyear_entity.dart';
 import 'package:dsc_event/domain/repositories/app_repositories.dart';
 
 class AppRepositoryImpl extends AppRepository {
@@ -78,6 +79,18 @@ class AppRepositoryImpl extends AppRepository {
     try {
       final podcast = await remoteDataSource.getMorePodCast();
       return Right(podcast);
+    } on SocketException {
+      return Left(AppError(AppErrorType.network));
+    } on Exception {
+      return Left(AppError(AppErrorType.api));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<TeamYearEntity>>> getTeam() async {
+    try {
+      final team = await remoteDataSource.getTeam();
+      return Right(team);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on Exception {

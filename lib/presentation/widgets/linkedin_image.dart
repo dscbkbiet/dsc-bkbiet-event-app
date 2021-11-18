@@ -7,12 +7,10 @@ class LinkedInImage extends StatelessWidget {
   final double width;
 
   const LinkedInImage({
-    Key key,
-    @required this.height,
-    @required this.width,
-  })  : assert(height != null || width != null,
-            'height and width must not be null'),
-        assert(height > 0 || width != null,
+    Key? key,
+    required this.height,
+    required this.width,
+  })  : assert(height > 0 || width > 0,
             'height and width should be greater than 0'),
         super(key: key);
 

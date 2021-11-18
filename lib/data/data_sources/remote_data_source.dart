@@ -4,6 +4,7 @@ import 'package:dsc_event/data/core/api_constants.dart';
 import 'package:dsc_event/data/models/blog.dart';
 import 'package:dsc_event/data/models/events.dart';
 import 'package:dsc_event/data/models/podcast.dart';
+import 'package:dsc_event/data/models/teamyear.dart';
 
 abstract class RemoteDataSource {
   Future<List<Events>> getEvents();
@@ -17,12 +18,14 @@ abstract class RemoteDataSource {
   Future<List<PodCast>> getPodCast();
 
   Future<List<PodCast>> getMorePodCast();
+
+  Future<List<TeamYear>> getTeam();
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
-  static DocumentSnapshot lastEventDocs;
-  static DocumentSnapshot lastBlogDocs;
-  static DocumentSnapshot lastPodCastDocs;
+  static late DocumentSnapshot lastEventDocs;
+  static late DocumentSnapshot lastBlogDocs;
+  static late DocumentSnapshot lastPodCastDocs;
 
   @override
   Future<List<Events>> getEvents() async {
@@ -33,7 +36,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      eList.add(Events.fromJson(item.data()));
+      eList.add(Events.fromJson(item.data() as Map));
     }
     lastEventDocs = _querySnapshot.docs.last;
     return eList;
@@ -49,7 +52,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      eList.add(Events.fromJson(item.data()));
+      eList.add(Events.fromJson(item.data() as Map));
     }
     if (_querySnapshot.docs.isNotEmpty)
       lastEventDocs = _querySnapshot.docs.last;
@@ -65,7 +68,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      bList.add(Blog.fromJson(item.data()));
+      bList.add(Blog.fromJson(item.data() as Map));
     }
     lastBlogDocs = _querySnapshot.docs.last;
     return bList;
@@ -81,7 +84,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      bList.add(Blog.fromJson(item.data()));
+      bList.add(Blog.fromJson(item.data() as Map));
     }
     if (_querySnapshot.docs.isNotEmpty) lastBlogDocs = _querySnapshot.docs.last;
     return bList;
@@ -96,7 +99,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      pList.add(PodCast.fromJson(item.data()));
+      pList.add(PodCast.fromJson(item.data() as Map));
     }
     if (_querySnapshot.docs.isNotEmpty)
       lastPodCastDocs = _querySnapshot.docs.last;
@@ -113,10 +116,23 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .limit(10)
         .get();
     for (final item in _querySnapshot.docs) {
-      pList.add(PodCast.fromJson(item.data()));
+      pList.add(PodCast.fromJson(item.data() as Map));
     }
     if (_querySnapshot.docs.isNotEmpty)
       lastPodCastDocs = _querySnapshot.docs.last;
     return pList;
+  }
+
+  @override
+  Future<List<TeamYear>> getTeam() async {
+    final List<TeamYear> tyList = [];
+    QuerySnapshot _querySnapshot  = await ApiConstants.fireStore
+        .collection(Strings.keyTeam)
+        .orderBy("year", descending: true)
+        .get();
+    for (final item in _querySnapshot.docs) {
+      tyList.add(TeamYear.fromJson(item.data() as Map));
+    }
+    return tyList;
   }
 }

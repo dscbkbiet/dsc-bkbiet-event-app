@@ -2,9 +2,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 
 class MyAudio extends ChangeNotifier {
-  static Duration totalDuration;
-  static Duration position;
-  static String audioState;
+  static late Duration totalDuration;
+  static late Duration position;
+  static late String audioState;
 
   static AudioPlayer audioPlayer = AudioPlayer();
 

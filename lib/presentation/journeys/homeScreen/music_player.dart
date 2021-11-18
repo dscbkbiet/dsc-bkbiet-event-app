@@ -12,12 +12,12 @@ const _minHeight = 70.0;
 
 class MusicPlayer extends StatefulWidget {
   const MusicPlayer(
-      {Key key,
-      this.currentPodCast,
-      this.onPause,
-      this.onResume,
-      this.onStop,
-      this.isPlay})
+      {Key? key,
+      required this.currentPodCast,
+      required this.onPause,
+      required this.onResume,
+      required this.onStop,
+      required this.isPlay})
       : super(key: key);
   final PodCast currentPodCast;
   final VoidCallback onPause;
@@ -31,7 +31,7 @@ class MusicPlayer extends StatefulWidget {
 
 class _MusicPlayerState extends State<MusicPlayer>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
   bool _expanded = false;
   double _currentHeight = _minHeight;
 
@@ -44,7 +44,7 @@ class _MusicPlayerState extends State<MusicPlayer>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -85,7 +85,7 @@ class _MusicPlayerState extends State<MusicPlayer>
                   child: ClipRRect(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(50),
-                      bottom: Radius.circular(lerpDouble(50.0, 0.0, value)),
+                      bottom: Radius.circular(lerpDouble(50.0, 0.0, value)!),
                     ),
                     child: ColoredBox(
                         color: _cardColor,
@@ -103,105 +103,98 @@ class _MusicPlayerState extends State<MusicPlayer>
   }
 
   Widget _buildExpandedContent() {
-    return widget.currentPodCast == null
-        ? const SizedBox()
-        : Container(
-            child: Stack(
-              children: [
-                CachedNetworkImage(
-                  imageUrl: widget.currentPodCast.imageUrl,
-                  height: _maxHeight,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                  placeholder: (context, url) => CarouselImageLoading(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Colors.black26, Colors.black38]),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: Column(
-                            children: [
-                              Text(
-                                widget.currentPodCast.publisher,
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                widget.currentPodCast.audioName
-                                    .intelliTrim(size: 40),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        if (widget.isPlay)
-                                          widget.onPause();
-                                        else
-                                          widget.onResume();
-                                      },
-                                      child: widget.isPlay
-                                          ? Icon(Icons.pause,
-                                              color: Colors.white)
-                                          : Icon(Icons.play_arrow_outlined,
-                                              color: Colors.white)),
-                                  GestureDetector(
-                                      onTap: () async {
-                                        _controller.reverse();
-                                        _expanded = false;
-                                        await Future.delayed(
-                                            Duration(milliseconds: 600));
-                                        widget.onStop();
-                                      },
-                                      child: Icon(Icons.stop,
-                                          color: Colors.white)),
-                                ],
-                              )
-                            ],
-                          ),
+    return Container(
+      child: Stack(
+        children: [
+          CachedNetworkImage(
+            imageUrl: widget.currentPodCast.imageUrl,
+            height: _maxHeight,
+            width: double.infinity,
+            fit: BoxFit.fill,
+            placeholder: (context, url) => CarouselImageLoading(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient:
+                    LinearGradient(colors: [Colors.black26, Colors.black38]),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Column(
+                      children: [
+                        Text(
+                          widget.currentPodCast.publisher,
+                          style: TextStyle(fontSize: 12, color: Colors.white),
                         ),
-                      ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          widget.currentPodCast.audioName.intelliTrim(size: 40),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  if (widget.isPlay)
+                                    widget.onPause();
+                                  else
+                                    widget.onResume();
+                                },
+                                child: widget.isPlay
+                                    ? Icon(Icons.pause, color: Colors.white)
+                                    : Icon(Icons.play_arrow_outlined,
+                                        color: Colors.white)),
+                            GestureDetector(
+                                onTap: () async {
+                                  _controller.reverse();
+                                  _expanded = false;
+                                  await Future.delayed(
+                                      Duration(milliseconds: 600));
+                                  widget.onStop();
+                                },
+                                child: Icon(Icons.stop, color: Colors.white)),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: InkWell(
-                      onTap: () {
-                        _controller.reverse();
-                        _expanded = false;
-                      },
-                      child: Icon(Icons.close, color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          );
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: InkWell(
+                onTap: () {
+                  _controller.reverse();
+                  _expanded = false;
+                },
+                child: Icon(Icons.close, color: Colors.white),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _buildMenuContent() {

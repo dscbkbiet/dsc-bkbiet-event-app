@@ -11,7 +11,7 @@ class EventsListPage extends StatefulWidget {
 }
 
 class _EventsListPageState extends State<EventsListPage> {
-  EventsListCubit _eventsListCubit;
+  late EventsListCubit _eventsListCubit;
   List<EventsEntity> _eventsList = List.empty(growable: true);
   bool isLoading = false;
 
@@ -24,7 +24,7 @@ class _EventsListPageState extends State<EventsListPage> {
 
   @override
   void dispose() {
-    _eventsListCubit?.close();
+    _eventsListCubit.close();
     super.dispose();
   }
 
@@ -32,7 +32,7 @@ class _EventsListPageState extends State<EventsListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder(
-        cubit: _eventsListCubit,
+        bloc: _eventsListCubit,
         builder: (context, state) {
           if (state is EventsListInitial ||
               state is EventsListLoading && _eventsList.isEmpty) {
@@ -40,8 +40,7 @@ class _EventsListPageState extends State<EventsListPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is EventsListLoaded) {
-            if(_eventsList.isEmpty)
-            _eventsList.addAll(state.eventsEntity);
+            if (_eventsList.isEmpty) _eventsList.addAll(state.eventsEntity);
           } else if (state is EventsListLoadingMore) {
             isLoading = true;
           } else if (state is EventsListLoadMore) {

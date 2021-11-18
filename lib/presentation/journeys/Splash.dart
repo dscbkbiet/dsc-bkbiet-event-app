@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void pushToNewPage() async {
-    await Future.delayed(Duration(seconds: 5)).then((value) {
+    await Future.delayed(Duration(seconds: 2)).then((value) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => HomeScreen()));
     });

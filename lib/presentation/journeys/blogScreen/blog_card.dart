@@ -6,11 +6,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 class BlogCard extends StatelessWidget {
   const BlogCard(
-      {Key key,
-      this.blogImageLink,
-      this.blogTitle,
-      this.blogLink,
-      this.blogSubTitle})
+      {Key? key,
+      required this.blogImageLink,
+      required this.blogTitle,
+      required this.blogLink,
+      required this.blogSubTitle})
       : super(key: key);
   final String blogImageLink;
   final String blogTitle;
@@ -56,8 +56,8 @@ class BlogCard extends StatelessWidget {
                     child: Text(
                       blogTitle,
                       maxLines: 1,
-                      style:
-                          TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                   ),
                   SizedBox(
@@ -85,7 +85,7 @@ class BlogCard extends StatelessWidget {
   }
 
   void openLink(BuildContext context, String blogLink) async {
-    if (blogLink != null) {
+    if (blogLink.isNotEmpty) {
       final url = blogLink;
       if (await canLaunch(url))
         await launch(url);

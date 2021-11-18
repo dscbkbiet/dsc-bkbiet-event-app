@@ -17,9 +17,9 @@ class EventsListCubit extends Cubit<EventsListState> {
   final LoadingCubit loadingCubit;
 
   EventsListCubit(
-      {@required this.getEvents,
-      @required this.loadingCubit,
-      @required this.getMoreEvents})
+      {required this.getEvents,
+      required this.loadingCubit,
+      required this.getMoreEvents})
       : super(EventsListInitial());
 
   void loadEvents() async {

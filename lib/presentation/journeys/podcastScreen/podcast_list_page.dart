@@ -1,4 +1,3 @@
-import 'package:dsc_event/data/models/podcast.dart';
 import 'package:dsc_event/di/get_it.dart';
 import 'package:dsc_event/domain/entities/podcast_entity.dart';
 import 'package:dsc_event/presentation/blocs/podcast/pod_cast_cubit.dart';
@@ -7,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PodCastPage extends StatefulWidget {
-  final Function(PodCast) podCast;
+  final Function(PodCastEntity) podCast;
 
-  const PodCastPage({Key key, this.podCast}) : super(key: key);
+  const PodCastPage({Key? key, required this.podCast}) : super(key: key);
 
   @override
   _PodCastPageState createState() => _PodCastPageState();
 }
 
 class _PodCastPageState extends State<PodCastPage> {
-  PodCastCubit _podCastCubit;
+  late PodCastCubit _podCastCubit;
   List<PodCastEntity> _podCastList = List.empty(growable: true);
   bool isLoading = false;
 
@@ -29,7 +28,7 @@ class _PodCastPageState extends State<PodCastPage> {
 
   @override
   void dispose() {
-    _podCastCubit?.close();
+    _podCastCubit.close();
     super.dispose();
   }
 
@@ -37,7 +36,7 @@ class _PodCastPageState extends State<PodCastPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder(
-        cubit: _podCastCubit,
+        bloc: _podCastCubit,
         builder: (context, state) {
           if (state is PodCastInitial ||
               state is PodCastLoading && _podCastList.isEmpty) {
@@ -45,8 +44,7 @@ class _PodCastPageState extends State<PodCastPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is PodCastLoaded) {
-            if(_podCastList.isEmpty)
-            _podCastList.addAll(state.podCastEntity);
+            if (_podCastList.isEmpty) _podCastList.addAll(state.podCastEntity);
           } else if (state is MorePodCastLoading) {
             isLoading = true;
           } else if (state is MorePodCastLoaded) {

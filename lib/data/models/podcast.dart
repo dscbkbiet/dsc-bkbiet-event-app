@@ -8,11 +8,11 @@ class PodCast extends PodCastEntity {
   final String publisher;
 
   PodCast(
-      {this.audioName,
-      this.audioUrl,
-      this.publisher,
-      this.audioId,
-      this.imageUrl})
+      {required this.audioName,
+      required this.audioUrl,
+      required this.publisher,
+      required this.audioId,
+      required this.imageUrl})
       : super(
             audioName: audioName,
             audioUrl: audioUrl,
@@ -20,7 +20,7 @@ class PodCast extends PodCastEntity {
             imageUrl: imageUrl,
             audioId: audioId);
 
-  factory PodCast.fromJson(Map<String, dynamic> json) {
+  factory PodCast.fromJson(Map<dynamic, dynamic> json) {
     return PodCast(
         audioName: json['audioName'],
         publisher: json['publisher'],

@@ -5,7 +5,11 @@ import 'package:dsc_event/presentation/journeys/blogScreen/blog_card.dart';
 import 'package:flutter/material.dart';
 
 class BlogList extends StatefulWidget {
-  const BlogList({Key key, this.onComplete, this.list, this.isLoading})
+  const BlogList(
+      {Key? key,
+      required this.onComplete,
+      required this.list,
+      required this.isLoading})
       : super(key: key);
   final VoidCallback onComplete;
   final List<BlogEntity> list;
@@ -27,7 +31,7 @@ class _BlogListState extends State<BlogList> {
   @override
   void dispose() {
     super.dispose();
-    _controllerBlogList?.dispose();
+    _controllerBlogList.dispose();
   }
 
   void _scrollListenerBlog() async {

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dsc_event/common/constants/Strings.dart';
+import 'package:dsc_event/domain/entities/team_entity.dart';
 import 'package:dsc_event/presentation/widgets/git_image.dart';
 import 'package:dsc_event/presentation/widgets/insta_image.dart';
 import 'package:dsc_event/presentation/widgets/linkedin_image.dart';
@@ -10,25 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperPage extends StatelessWidget {
-  const DeveloperPage(
-      {Key key,
-      @required this.memberImage,
-      @required this.memberName,
-      @required this.memberPost,
-      @required this.aboutMember,
-      @required this.memberLinkedIn,
-      @required this.memberInsta,
-      @required this.memberTwitter,
-      @required this.memberGitHub})
-      : super(key: key);
-  final String memberImage;
-  final String memberName;
-  final String memberPost;
-  final String memberLinkedIn;
-  final String memberInsta;
-  final String memberTwitter;
-  final String memberGitHub;
-  final String aboutMember;
+  const DeveloperPage({
+    Key? key,
+    required this.teamEntity,
+  }) : super(key: key);
+
+  final TeamEntity teamEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +27,6 @@ class DeveloperPage extends StatelessWidget {
           height: 40,
         ),
         backgroundColor: Colors.grey.shade900,
-        brightness: Brightness.dark,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.white),
       ),
@@ -59,7 +46,7 @@ class DeveloperPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: CachedNetworkImage(
-                      imageUrl: memberImage,
+                      imageUrl: teamEntity.memberImage,
                       height: 80,
                       fit: BoxFit.fill,
                       placeholder: (context, url) => CarouselImageLoading(),
@@ -69,7 +56,7 @@ class DeveloperPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    "From the $memberPost desk",
+                    "From the ${teamEntity.memberPost} desk",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 20,
@@ -81,20 +68,23 @@ class DeveloperPage extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
-            child: Text(
-              aboutMember,
-              style: TextStyle(fontSize: 15, height: 1.5),
-            ),
-          ),
+          teamEntity.aboutMember != null
+              ? Padding(
+                  padding:
+                      const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
+                  child: Text(
+                    teamEntity.aboutMember!,
+                    style: TextStyle(fontSize: 15, height: 1.5),
+                  ),
+                )
+              : SizedBox.shrink(),
           SizedBox(
             height: 15.0,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              memberName,
+              teamEntity.memberName,
               textAlign: TextAlign.right,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
@@ -103,71 +93,84 @@ class DeveloperPage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 30.0, left: 15.0),
             child: Column(
               children: [
-                InkWell(
-                  onTap: () {
-                    openWeb("${Strings.instagram}$memberInsta", context);
-                  },
-                  child: Row(
-                    children: [
-                      InstaImage(height: 30, width: 30),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/$memberInsta"),
-                      )
-                    ],
+                if (teamEntity.memberInsta != null &&
+                    teamEntity.memberInsta!.isNotEmpty)
+                  InkWell(
+                    onTap: () {
+                      openWeb("${Strings.instagram}${teamEntity.memberInsta}",
+                          context);
+                    },
+                    child: Row(
+                      children: [
+                        InstaImage(height: 30, width: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text("/${teamEntity.memberInsta}"),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                InkWell(
-                  onTap: () {
-                    openWeb("${Strings.linkedIn}$memberLinkedIn", context);
-                  },
-                  child: Row(
-                    children: [
-                      LinkedInImage(height: 30, width: 30),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/$memberLinkedIn"),
-                      )
-                    ],
+                if (teamEntity.memberLinkedIn != null &&
+                    teamEntity.memberLinkedIn!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: InkWell(
+                      onTap: () {
+                        openWeb(
+                            "${Strings.linkedIn}${teamEntity.memberLinkedIn}",
+                            context);
+                      },
+                      child: Row(
+                        children: [
+                          LinkedInImage(height: 30, width: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text("/${teamEntity.memberLinkedIn}"),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                InkWell(
-                  onTap: () {
-                    openWeb("${Strings.twitter}$memberTwitter", context);
-                  },
-                  child: Row(
-                    children: [
-                      TwitterImage(height: 30, width: 30),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/$memberTwitter"),
-                      )
-                    ],
+                if (teamEntity.memberTwitter != null &&
+                    teamEntity.memberTwitter!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: InkWell(
+                      onTap: () {
+                        openWeb("${Strings.twitter}${teamEntity.memberTwitter}",
+                            context);
+                      },
+                      child: Row(
+                        children: [
+                          TwitterImage(height: 30, width: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text("/${teamEntity.memberTwitter}"),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                InkWell(
-                  onTap: () {
-                    openWeb("${Strings.gitHub}$memberGitHub", context);
-                  },
-                  child: Row(
-                    children: [
-                      GitHubImage(height: 30, width: 30),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text("/$memberGitHub"),
-                      )
-                    ],
+                if (teamEntity.memberGitHub != null &&
+                    teamEntity.memberGitHub!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: InkWell(
+                      onTap: () {
+                        openWeb("${Strings.gitHub}${teamEntity.memberGitHub}",
+                            context);
+                      },
+                      child: Row(
+                        children: [
+                          GitHubImage(height: 30, width: 30),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text("/${teamEntity.memberGitHub}"),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
                 SizedBox(
                   height: 25.0,
                 ),

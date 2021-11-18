@@ -14,7 +14,7 @@ class BlogListCubit extends Cubit<BlogListState> {
   final GetBlog getBlog;
   final GetMoreBlog getMoreBlog;
 
-  BlogListCubit({@required this.getBlog, @required this.getMoreBlog})
+  BlogListCubit({required this.getBlog, required this.getMoreBlog})
       : super(BlogListInitial());
 
   void loadBlog() async {

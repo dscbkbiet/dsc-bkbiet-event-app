@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dsc_event/data/models/podcast.dart';
 import 'package:dsc_event/di/get_it.dart';
 import 'package:dsc_event/presentation/blocs/musicPlayerAnimation/music_player_animation_cubit.dart';
@@ -18,21 +16,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  PodCast _currentPodCast;
+  late PodCast? _currentPodCast;
   PageController _pageController = PageController();
   int selectedIndex = 0;
   bool isPlay = false;
-  MusicPlayerAnimationCubit _musicPlayerAnimationCubit;
+  late MusicPlayerAnimationCubit _musicPlayerAnimationCubit;
 
   @override
   void initState() {
+    _currentPodCast = null;
     _musicPlayerAnimationCubit = getItInstance<MusicPlayerAnimationCubit>();
     super.initState();
   }
 
   @override
   void dispose() {
-    _musicPlayerAnimationCubit?.close();
+    _musicPlayerAnimationCubit.close();
     _pageController.dispose();
     super.dispose();
   }
@@ -50,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 40,
         ),
         backgroundColor: Colors.grey.shade900,
-        brightness: Brightness.dark,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.white),
       ),
@@ -89,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: BlocBuilder(
-        cubit: _musicPlayerAnimationCubit,
+        bloc: _musicPlayerAnimationCubit,
         builder: (context, state) {
           if (state is PlayMusic) {
             _currentPodCast = state.podCast;
@@ -103,25 +101,35 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           return Stack(
             children: [
-              PageView(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                children: [
-                  EventsListPage(),
-                  BlogPage(),
-                  PodCastPage(podCast: (data) {
-                    _musicPlayerAnimationCubit.playPodCast(data);
-                  }),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: PageView(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        },
+                        children: [
+                          EventsListPage(),
+                          BlogPage(),
+                          PodCastPage(podCast: (data) {
+                            _musicPlayerAnimationCubit
+                                .playPodCast(data as PodCast);
+                          }),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               if (_currentPodCast != null)
                 MusicPlayer(
                   isPlay: isPlay,
-                  currentPodCast: _currentPodCast,
+                  currentPodCast: _currentPodCast!,
                   onPause: () {
                     _musicPlayerAnimationCubit.pausePodCast();
                   },
@@ -131,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onStop: () {
                     _musicPlayerAnimationCubit.stopPodCast();
                   },
-                )
+                ),
             ],
           );
         },

@@ -3,6 +3,7 @@ import 'package:dsc_event/domain/entities/app_error.dart';
 import 'package:dsc_event/domain/entities/blog_entity.dart';
 import 'package:dsc_event/domain/entities/events_entity.dart';
 import 'package:dsc_event/domain/entities/podcast_entity.dart';
+import 'package:dsc_event/domain/entities/teamyear_entity.dart';
 
 abstract class AppRepository {
   Future<Either<AppError, List<EventsEntity>>> getEvents();
@@ -16,4 +17,6 @@ abstract class AppRepository {
   Future<Either<AppError, List<PodCastEntity>>> getPodCast();
 
   Future<Either<AppError, List<PodCastEntity>>> getMorePodCast();
+
+  Future<Either<AppError, List<TeamYearEntity>>> getTeam();
 }

@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dsc_event/common/extensions/ext.dart';
 import 'package:dsc_event/domain/entities/podcast_entity.dart';
 import 'package:dsc_event/presentation/widgets/loadingImage.dart';
 import 'package:flutter/material.dart';
-import 'package:dsc_event/common/extensions/ext.dart';
 
 class PodCastCard extends StatelessWidget {
   final PodCastEntity podCastEntity;
   final Function(PodCastEntity) onTap;
 
-  const PodCastCard({Key key, this.podCastEntity, this.onTap})
+  const PodCastCard(
+      {Key? key, required this.podCastEntity, required this.onTap})
       : super(key: key);
 
   @override
@@ -50,8 +51,8 @@ class PodCastCard extends StatelessWidget {
                     child: Text(
                       podCastEntity.publisher,
                       maxLines: 1,
-                      style:
-                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w600),
                     ),
                   ),
                   SizedBox(

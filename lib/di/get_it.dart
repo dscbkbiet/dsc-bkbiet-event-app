@@ -7,11 +7,13 @@ import 'package:dsc_event/domain/usecases/get_events.dart';
 import 'package:dsc_event/domain/usecases/get_events_more.dart';
 import 'package:dsc_event/domain/usecases/get_more_podcast.dart';
 import 'package:dsc_event/domain/usecases/get_podcast.dart';
+import 'package:dsc_event/domain/usecases/get_team.dart';
 import 'package:dsc_event/presentation/blocs/blogList/blog_list_cubit.dart';
 import 'package:dsc_event/presentation/blocs/eventsList/events_list_cubit.dart';
 import 'package:dsc_event/presentation/blocs/loading/loading_cubit.dart';
 import 'package:dsc_event/presentation/blocs/musicPlayerAnimation/music_player_animation_cubit.dart';
 import 'package:dsc_event/presentation/blocs/podcast/pod_cast_cubit.dart';
+import 'package:dsc_event/presentation/blocs/teamList/team_list_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final getItInstance = GetIt.I;
@@ -28,6 +30,9 @@ Future init() async {
   ///Use Cases
   getItInstance
       .registerLazySingleton<GetEvents>(() => GetEvents(getItInstance()));
+
+  getItInstance.registerLazySingleton<GetTeam>(() => GetTeam(getItInstance()));
+
   getItInstance.registerLazySingleton<GetMoreEvents>(
       () => GetMoreEvents(getItInstance()));
 
@@ -49,6 +54,10 @@ Future init() async {
         loadingCubit: getItInstance(),
         getEvents: getItInstance(),
         getMoreEvents: getItInstance()),
+  );
+
+  getItInstance.registerFactory(
+    () => TeamListCubit(getTeam: getItInstance()),
   );
 
   getItInstance.registerFactory(

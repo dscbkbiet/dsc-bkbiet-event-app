@@ -24,14 +24,15 @@ class PushNotificationService {
     FirebaseMessaging.onMessage.listen((event) {
       print(event.notification);
       if (event.notification != null) {
-        _showNotification(event.notification);
+        _showNotification(event.notification!);
       }
     });
   }
 
   static void _showNotification(RemoteNotification message) async {
-    var android = new AndroidNotificationDetails("OpenAppNotification",
-        "OpenAppNotification", "Notification shown when app is open");
+    var android = new AndroidNotificationDetails(
+        "OpenAppNotification", "OpenAppNotification",
+        channelDescription: "Notification shown when app is open");
     var ios = new IOSNotificationDetails();
     var platform = new NotificationDetails(android: android, iOS: ios);
     await flutterLocalNotificationsPlugin.show(

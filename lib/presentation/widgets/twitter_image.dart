@@ -7,12 +7,10 @@ class TwitterImage extends StatelessWidget {
   final double width;
 
   const TwitterImage({
-    Key key,
-    @required this.height,
-    @required this.width,
-  })  : assert(height != null || width != null,
-            'height and width must not be null'),
-        assert(height > 0 || width > 0,
+    Key? key,
+    required this.height,
+    required this.width,
+  })  : assert(height > 0 || width > 0,
             'height and width should be greater than 0'),
         super(key: key);
 

@@ -14,7 +14,7 @@ class PodCastCubit extends Cubit<PodCastState> {
   final GetPodCast getPodCast;
   final GetMorePodCast getMorePodCast;
 
-  PodCastCubit({@required this.getPodCast, @required this.getMorePodCast})
+  PodCastCubit({required this.getPodCast, required this.getMorePodCast})
       : super(PodCastInitial());
 
   void loadPodCast() async {

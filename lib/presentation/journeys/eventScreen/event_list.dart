@@ -5,7 +5,11 @@ import 'package:dsc_event/presentation/journeys/eventScreen/event_card.dart';
 import 'package:flutter/material.dart';
 
 class EventList extends StatefulWidget {
-  const EventList({Key key, this.onComplete, this.list, this.isLoading})
+  const EventList(
+      {Key? key,
+      required this.onComplete,
+      required this.list,
+      required this.isLoading})
       : super(key: key);
   final VoidCallback onComplete;
   final List<EventsEntity> list;
@@ -27,12 +31,12 @@ class _EventListState extends State<EventList> {
   @override
   void dispose() {
     super.dispose();
-    _controllerEventsList?.dispose();
+    _controllerEventsList.dispose();
   }
 
   void _scrollListenerEvents() async {
     if (_controllerEventsList.offset >=
-        _controllerEventsList.position.maxScrollExtent &&
+            _controllerEventsList.position.maxScrollExtent &&
         !_controllerEventsList.position.outOfRange) {
       widget.onComplete();
     }
