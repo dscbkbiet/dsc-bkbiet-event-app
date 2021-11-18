@@ -21,7 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: Colors.grey.shade900,
         body: Stack(
           children: [
-            Center(child: Image.asset(Images.logo)),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 20.0),
+              child: Center(child: Image.asset(Images.logo)),
+            ),
             Align(
               child: LoadingBar(),
               alignment: Alignment.bottomCenter,

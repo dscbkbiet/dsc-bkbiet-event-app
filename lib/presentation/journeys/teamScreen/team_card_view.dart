@@ -19,7 +19,7 @@ class _TeamCardViewState extends State<TeamCardView> {
 
   @override
   void initState() {
-    isExpanded = widget.isCurrentTeam;
+    isExpanded = !widget.isCurrentTeam;
     super.initState();
   }
 
