@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-
 class Strings {
 
   Strings._();
