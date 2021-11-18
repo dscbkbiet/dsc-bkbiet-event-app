@@ -150,7 +150,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                               Material(
                                 color: Color(0xff007D74),
                                 borderRadius: BorderRadius.circular(30.0),
-                                child: FlatButton(
+                                child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: Color(0xff007D74),
+                                ),
                                   onPressed: () async {
                                     if (widget.events.eventUrl.isNotEmpty) {
                                       final url = widget.events.eventUrl;
@@ -169,7 +172,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                         ));
                                     }
                                   },
-                                  color: Color(0xff007D74),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
