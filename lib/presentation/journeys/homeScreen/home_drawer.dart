@@ -107,10 +107,7 @@ class DrawerView extends StatelessWidget {
   }
 
   void openLink(String url, BuildContext context) async {
-    if (await canLaunchUrl(Uri(scheme: "https", path: url.replaceAll("https://", "")))) {
-      launchUrl( Uri(scheme: "https", path: url.replaceAll("https://", "")));
-
-    } else
+    if (!await launchUrl(Uri.parse(url),mode: LaunchMode.externalApplication))
       // can't launch url, there is some error
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
@@ -123,10 +120,7 @@ class DrawerView extends StatelessWidget {
 
   void openSpotify(BuildContext context) async {
     const url = "https://open.spotify.com/show/63yaglAHUitrDjH9WCXlSZ";
-    if (await canLaunchUrl(Uri(scheme: "https", path: url.replaceAll("https://", "")))) {
-      launchUrl( Uri(scheme: "https", path: url.replaceAll("https://", "")));
-
-    } else
+    if (!await launchUrl(Uri.parse(url),mode: LaunchMode.externalApplication))
       // can't launch url, there is some error
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(

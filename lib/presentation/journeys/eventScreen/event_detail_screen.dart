@@ -157,13 +157,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                   onPressed: () async {
                                     if (widget.events.eventUrl.isNotEmpty) {
                                       final url = widget.events.eventUrl;
-                                      if (await canLaunchUrl(
-                                          Uri(scheme: "https", path: url))) {
-                                        launchUrl(Uri(
-                                            scheme: "https",
-                                            path: url.replaceAll(
-                                                "https://", "")));
-                                      } else
+                                      if (!await launchUrl(Uri.parse(url),mode: LaunchMode.externalApplication))
                                         // can't launch url, there is some error
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(

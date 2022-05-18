@@ -183,9 +183,7 @@ class DeveloperPage extends StatelessWidget {
   }
 
   void openWeb(String url, BuildContext context) async {
-    if (await canLaunchUrl(Uri(scheme: "https", path: url.replaceAll("https://", "")))) {
-      launchUrl( Uri(scheme: "https", path: url.replaceAll("https://", "")));
-    } else
+    if (!await launchUrl(Uri.parse(url),mode: LaunchMode.externalApplication))
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           "Error while opening url try again!",
