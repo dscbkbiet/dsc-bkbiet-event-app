@@ -120,10 +120,10 @@ class TeamCard extends StatelessWidget {
   void openLink(String link, BuildContext context) async {
     try {
       if (link.isNotEmpty) {
-        final url = link;
-        if (await canLaunch(url))
-          await launch(url);
-        else
+        if (await canLaunchUrl(Uri(scheme: "https", path: link.replaceAll("https://", "")))) {
+          launchUrl( Uri(scheme: "https", path: link.replaceAll("https://", "")));
+
+        } else
           // can't launch url, there is some error
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(

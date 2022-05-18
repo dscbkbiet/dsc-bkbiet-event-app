@@ -86,11 +86,12 @@ class BlogCard extends StatelessWidget {
 
   void openLink(BuildContext context, String blogLink) async {
     if (blogLink.isNotEmpty) {
-      final url = blogLink;
-      if (await canLaunch(url))
-        await launch(url);
-      else
-        // can't launch url, there is some error
+      if (await canLaunchUrl(Uri(
+        scheme: 'https',
+        path: blogLink.replaceAll("https://", ""),
+      ))) {
+        launchUrl( Uri(scheme: "https", path: blogLink.replaceAll("https://", "")));
+      } else
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
             "Error while opening url try again!",
