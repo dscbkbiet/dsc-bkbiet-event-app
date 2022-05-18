@@ -151,15 +151,19 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 color: Color(0xff007D74),
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: TextButton(
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Color(0xff007D74),
-                                ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: Color(0xff007D74),
+                                  ),
                                   onPressed: () async {
                                     if (widget.events.eventUrl.isNotEmpty) {
                                       final url = widget.events.eventUrl;
-                                      if (await canLaunch(url))
-                                        await launch(url);
-                                      else
+                                      if (await canLaunchUrl(
+                                          Uri(scheme: "https", path: url))) {
+                                        launchUrl(Uri(
+                                            scheme: "https",
+                                            path: url.replaceAll(
+                                                "https://", "")));
+                                      } else
                                         // can't launch url, there is some error
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
